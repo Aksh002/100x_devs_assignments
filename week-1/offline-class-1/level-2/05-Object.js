@@ -2,7 +2,7 @@
 function objectMethods(obj) {
   console.log("Original Object:", obj);
 
-  let keys = Object.keys(obj);
+  let keys = Object.keys(obj);  // .keys is a Static method of global Class-Object passed directly on the class itself  
   console.log("After Object.keys():", keys);
 
   let values = Object.values(obj);
@@ -16,7 +16,7 @@ function objectMethods(obj) {
 
   let newObj = Object.assign({}, obj, { newProperty: "newValue" });
   console.log("After Object.assign():", newObj);
-
+  // Merge two objects together 
 
 }
 

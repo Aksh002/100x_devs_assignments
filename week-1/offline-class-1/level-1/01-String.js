@@ -32,6 +32,7 @@ function getSlice(str, start, end) {
   console.log("After slice:", str.slice(start, end));
 }
 getSlice("Hello World", 0, 5);
+//index 5 not included
 
 // substring
 function getSubstring(str, start, end) {

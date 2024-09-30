@@ -45,5 +45,71 @@
   const app = express();
   
   app.use(bodyParser.json());
+
+  let count=4
+  let todos=[{
+    title:"workout",
+    discription:"jogging and pushups",
+    id:1,
+    completed:true
+  },
+  {
+    title:"workout",
+    discription:"jogging and pushups",
+    id:2,
+    completed:false
+  },
+  {
+    title:"workout",
+    discription:"jogging and pushups",
+    id:3,
+    completed:false
+  }]
+
+  app.get("/todos",function(req,res){
+    if (todos.length==0)
+      res.status(404).send("No todos found")
+    res.status(200).json(todos);
+  })
   
+  app.get("/todos/:id",function(req,res){
+    if (todos.length==0)
+      res.status(404).send("No todos found")
+    res.status(200).json(todos.find(function(i){
+      if (i.id==id)
+        return i;
+    }));
+  })
+
+  app.post("/todos",function(req,res){
+    const todo=req.body
+    todo.id=count++
+    todos.push(todo)
+    res.status(201).send("Todo appeneded succesfully"+todo.id)
+  })
+
+  app.put("/todos/:id",function(req,res){
+    const todo=todos.find(function(i){
+      return i.id==req.params.id
+    })
+    if (!todo)
+      res.status(400).send("Todo not found with provided id")
+    todo.title=req.body.title
+    todo.completed=req.body.completed
+    res.status(200).send(todo)
+  })
+  
+  app.delete("/todos/:id",function(req,res){
+    const p_id=parseInt(req.params.id,10)     // 10 here is the radix or base parameter. The radix is a number that specifies the base of the numerical system that you want to use for converting the string to an integer.
+    const o_len=todos.length
+    todos=todos.filter(function(todo){
+      return todo.id!==p_id
+    })
+
+    if (todos.length===o_len)
+      res.status(404).send("Todo not found")
+
+    res.status(200).send("OK")
+  })
+  app.listen(3000)
   module.exports = app;
